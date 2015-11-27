@@ -27,3 +27,4 @@ class TestConfig(BaseConfig):
     SQLALCHEMY_ECHO = False
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    PRESERVE_CONTEXT_ON_EXCEPTION = False

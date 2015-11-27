@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template
-from .extensions import db
+from .extensions import db, bootstrap
 
 
 def create_app(config=None):
@@ -20,12 +20,13 @@ def configure_app(app, config=None):
 def configure_extensions(app):
     # Flask-SqlAlchemy
     db.init_app(app)
+    # Flask-bootsrap
+    bootstrap.init_app(app)
 
 
 def configure_blueprints(app):
-    # Configure blueprints in views.
-    # register our blueprints
-    pass
+    from creator.views import creator as creator_blueprint
+    app.register_blueprint(creator_blueprint)
 
 
 def configure_error_handlers(app):
