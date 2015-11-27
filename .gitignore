@@ -2,3 +2,4 @@
 *.nja
 *.db
 *.sqlite
+*.coverage
