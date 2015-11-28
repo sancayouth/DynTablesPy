@@ -35,6 +35,11 @@ class ModelsTestCase(BaseTestCase):
         t1 = DynTable('table 1')
         self.assertEqual('table_1', t1.id)
 
+    def test_dyntable_id_not_contain_spaces_on_edit(self):
+        t1 = DynTable('table 1')
+        t1.set_id('table 2')
+        self.assertEqual('table_2', t1.id)
+
     def test_dynattr_are_created(self):
         t1 = DynTable('table1')
         db.session.add(t1)

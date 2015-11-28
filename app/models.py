@@ -14,6 +14,9 @@ class DynTable(db.Model):
     def __init__(self, name):
         self.id = name.lower().replace(' ', '_')
 
+    def set_id(self, id):
+        self.id = id.lower().replace(' ', '_')
+
     def __repr__(self):
         return '<DynTable (table_name=%r)>' % (self.id)
 

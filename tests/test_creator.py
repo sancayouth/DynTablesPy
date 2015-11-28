@@ -27,3 +27,17 @@ class CreatorTestCase(BaseTestCase):
         self.assertIn(b'table_test', response.data)
         ta = DynTable.query.filter_by(id='table_test').first()
         self.assertIsNotNone(ta)
+
+    def test_edit_table(self):
+        db.session.add(DynTable('table'))
+        db.session.commit()
+        response = self.client.post(
+                    '/creator/edit/table',
+                    data=dict(id_='table test'),
+                    follow_redirects=True)
+        self.assertIn(b'DynTable - List of Tables', response.data)
+        self.assertIn(b'table_test', response.data)
+        ta = DynTable.query.filter_by(id='table').first()
+        self.assertIsNone(ta)
+        ta = DynTable.query.filter_by(id='table_test').first()
+        self.assertIsNotNone(ta)

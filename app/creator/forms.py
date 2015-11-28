@@ -12,4 +12,4 @@ class DynTableForm(Form):
         self.id_.data = table.id
 
     def to_model(self, table):
-        table.id = self.id_.data
+        table.set_id(self.id_.data)
