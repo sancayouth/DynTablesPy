@@ -14,3 +14,11 @@ footer {
 footer .container .row{
   padding-top: 15px;
 }
+
+.detail {
+    padding-top: 20px;
+}
+
+.add-attr {
+    margin-top: 13px;
+}
