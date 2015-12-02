@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import Form
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -13,3 +13,12 @@ class DynTableForm(Form):
 
     def to_model(self, table):
         table.set_id(self.id_.data)
+
+
+class DynAttributeForm(Form):
+    attr_name = StringField('Attribute Name', validators=[DataRequired()])
+    pk = BooleanField('Primary Key')
+    display = StringField('Display', validators=[DataRequired()])
+    attr_type = SelectField(u'Type', choices=[('I', 'Integer'),
+                 ('S', 'String'), ('B', 'Boolean')])
+    required = BooleanField('Required')
