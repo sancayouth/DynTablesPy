@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, redirect, url_for, request
 from .forms import DynTableForm, DynAttributeForm
-from app.extensions import db
+from app.extensions import db,  create_table
 from app.models import DynTable, DynAttribute
 from app.utils import formToDict, chboxtopy
+
 
 creator = Blueprint('creator', __name__, template_folder='templates',
                   url_prefix='/creator')
@@ -23,11 +24,14 @@ def add():
                 attrDic = formToDict(rform.get('attr_' + str(i)))
                 attr = DynAttribute(
                     attrDic.get('attr_name').replace('+',' '), dynT.id,
-                    attrDic.get('display').replace('+',' '),
+                    attrDic.get('display',' ').replace('+',' '),
                     attrDic.get('attr_type'), chboxtopy(attrDic.get('pk')),
                     chboxtopy(attrDic.get('required')))
                 db.session.add(attr)
+                Table = create_table(rform.get('id_'), [attrDic])
         db.session.commit()
+        db.create_all()
+        #should create the table on DB
         return '1'
     return render_template('index.html', title='DynTable - Add Table',
                            form=form, detail_form=detail_form, url='add')
