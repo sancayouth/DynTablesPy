@@ -23,8 +23,7 @@ class CreatorTestCase(BaseTestCase):
             data=dict(id_='table test'),
             follow_redirects=True
         )
-        self.assertIn(b'DynTable - List of Tables', response.data)
-        self.assertIn(b'table_test', response.data)
+        self.assertIn(b'1', response.data)        
         ta = DynTable.query.filter_by(id='table_test').first()
         self.assertIsNotNone(ta)
 
