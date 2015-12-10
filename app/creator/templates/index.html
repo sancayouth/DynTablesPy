@@ -6,7 +6,7 @@
       <div class="col-md-9">
         <h1>Create Table</h1>
         <br>
-              {{ wtf.quick_form(form, extra_classes="form-table" )}}  
+              {{ wtf.quick_form(form, extra_classes="form-table" )}}
     </div>
 </div>
 <div class="row detail">
@@ -46,9 +46,14 @@
     <script>
          $(".form-table").submit(function(e){
             e.preventDefault();
-            $.post("{{url}}",$(this).serializeArray()).done(function(data){
-               window.location = "/creator";
-            }).error(function() { alert('Internal Server Error'); });
+            //if detail is not empty
+            if ($('#table tr').length > 0){
+              $.post("{{url}}",$(this).serializeArray()).done(function(data){
+                 window.location = "/creator";
+              }).error(function() { alert('Internal Server Error'); });
+            }else{
+              //TODO: Display msg error
+            }
          });
 
          $("#save_ch").on("click", function(e){
