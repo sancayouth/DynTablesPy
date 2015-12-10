@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, redirect, url_for, request
 from .forms import DynTableForm, DynAttributeForm
-from app.extensions import db,  create_table
-from app.models import DynTable, DynAttribute
+from app.extensions import db
+from app.models import DynTable, DynAttribute, create_table
 from app.utils import formToDict, chboxtopy
 
 
