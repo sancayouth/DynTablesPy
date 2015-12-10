@@ -11,11 +11,10 @@ class UtilsTestCase(BaseTestCase):
         table_attr.append({'attr_name':'id','attr_type':'I', 'pk':True})
         Table = create_table('tablepoc', table_attr)
         db.create_all()
-        poc = Table()
-        poc.id = 1
-        poc.name = 'hello'
+        poc = Table(id=1, name='hello')
         db.session.add(poc)
         db.session.commit()
         self.assertEqual(1, len(Table.query.all()))
         table = Table.query.first()
-        self.assertEqual('hello', table.name)
+        self.assertEqual('hello', table.name)        
+        self.assertIsNotNone(db.metadata.tables.get('tablepoc'))
