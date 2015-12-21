@@ -44,6 +44,10 @@
     <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script>
+         var getValue = function (obj, propertyName, ret) {
+            return (propertyName in obj)?obj[propertyName]:ret;
+         };
+
          $(".form-table").submit(function(e){
             e.preventDefault();
             //if detail is not empty
@@ -61,12 +65,19 @@
             var $rowCount = $('#table tr').length;
             var $form = $(".form-attr");
             var $array = $form.serializeArray();
-            $tr = $("<tr>");
+            $tr = $("<tr>").attr("id", $rowCount);
+            var dict = {}
             $array.forEach(function(value, index, ar){
-            if (value.name !== "csrf_token")
-              $tr.append($("<td>").attr("id", $rowCount).
-              addClass(value.name).html(value.value.replace(/<[^>]+>/ig,'')));
+              if (value.name !== "csrf_token"){
+                dict[value.name] = value.value;
+              }
             });
+            $tr.append($("<td>").html(getValue(dict,'attr_name','').replace(/<[^>]+>/ig,'')))
+               .append($("<td>").html(getValue(dict,'display','').replace(/<[^>]+>/ig,'')))
+               .append($("<td>").html(getValue(dict,'attr_type','').replace(/<[^>]+>/ig,'')))
+               .append($("<td>").html(getValue(dict,'pk','f')))
+               .append($("<td>").html(getValue(dict,'required','f')));
+
             var $a = $("<button>").attr("data-id", "attr_"+$rowCount)
                  .addClass("btn btn-info").html("Delete")
                  .on("click", function(e){
@@ -78,9 +89,9 @@
             $tr.append($a);
             $("#table tbody").append($tr);
             $("<input>").attr("type", "hidden")
-            .attr("id", "attr_"+$rowCount)
-            .attr("name", "attr_"+$rowCount)
-            .val($form.serialize()).appendTo(".form-table");
+              .attr("id", "attr_"+$rowCount)
+              .attr("name", "attr_"+$rowCount)
+              .val($form.serialize()).appendTo(".form-table");
             $("#modalAttr").modal("hide");
          });
 
