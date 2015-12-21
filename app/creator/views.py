@@ -6,7 +6,7 @@ from app.models import DynTable, DynAttribute, create_table
 from app.utils import formToDict, chboxtopy
 
 
-creator = Blueprint('creator', __name__, template_folder='templates',
+creator = Blueprint('creator', __name__, template_folder='templates',\
                   url_prefix='/creator')
 
 
@@ -16,20 +16,22 @@ def add():
     detail_form = DynAttributeForm()
     rform = request.form
     if form.validate_on_submit():
-        dynT = DynTable(rform.get('id_'))
-        db.session.add(dynT)
+        dyn_table = DynTable(rform.get('id_'))
+        db.session.add(dyn_table)
         if len(rform) > 2:
             #add detail
+            attr_list = []
             for i in range(1, len(rform) - 1):
-                attrDic = formToDict(rform.get('attr_' + str(i)))
+                attr_dic = formToDict(rform.get('attr_' + str(i)))
                 attr = DynAttribute(
-                    attrDic.get('attr_name').replace('+',' '), dynT.id,
-                    attrDic.get('display',' ').replace('+',' '),
-                    attrDic.get('attr_type'), chboxtopy(attrDic.get('pk')),
-                    chboxtopy(attrDic.get('required')))
+                    attr_dic.get('attr_name').replace('+', ' '), dyn_table.id,
+                    attr_dic.get('display', ' ').replace('+', ' '),
+                    attr_dic.get('attr_type'), chboxtopy(attr_dic.get('pk')),
+                    chboxtopy(attr_dic.get('required')))
+                attr_list.append(attr_dic)
                 db.session.add(attr)
-                Table = create_table(rform.get('id_'), [attrDic])
         db.session.commit()
+        create_table(rform.get('id_'), attr_list)
         db.create_all()
         #should create the table on DB
         return '1'
@@ -37,23 +39,24 @@ def add():
                            form=form, detail_form=detail_form, url='add')
 
 
-@creator.route('/edit/<id>', methods=['GET', 'POST'])
-def edit(id):
-    dT = DynTable.query.get_or_404(id)
+@creator.route('/edit/<table_id>', methods=['GET', 'POST'])
+def edit(table_id):
+    dyn_table = DynTable.query.get_or_404(table_id)
     form = DynTableForm()
     detail_form = DynAttributeForm()
     if form.validate_on_submit():
-        form.to_model(dT)
-        db.session.add(dT)
+        form.to_model(dyn_table)
+        db.session.add(dyn_table)
         db.session.commit()
         return redirect(url_for('creator.list_tables'))
-    form.from_model(dT)
-    return render_template('index.html', title='DynTable - Edit Table ' + id,
-                           form=form, detail_form=detail_form)
+    form.from_model(dyn_table)
+    return render_template('index.html', title='DynTable - Edit Table '\
+         + table_id,form=form, detail_form=detail_form)
+
 
 
 @creator.route('/')
 def list_tables():
-    dT = DynTable.query.all()
-    return render_template('list.html', title='DynTable - List of Tables',
-                            tables=dT)
+    dyn_table = DynTable.query.all()
+    return render_template('list.html', title='DynTable - List of Tables', \
+                            tables=dyn_table)
