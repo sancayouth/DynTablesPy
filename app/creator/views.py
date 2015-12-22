@@ -26,7 +26,7 @@ def add():
                 attr = DynAttribute(
                     attr_dic.get('attr_name').replace('+', ' '), dyn_table.id,
                     attr_dic.get('display', ' ').replace('+', ' '),
-                    attr_dic.get('attr_type'), chboxtopy(attr_dic.get('pk')),
+                    attr_dic.get('attr_type')[0], chboxtopy(attr_dic.get('pk')),
                     chboxtopy(attr_dic.get('required')))
                 attr_list.append(attr_dic)
                 db.session.add(attr)
