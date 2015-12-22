@@ -40,7 +40,7 @@ class DynAttribute(db.Model):
         self.attr_name = name.lower().replace(' ', '_')
         self.pk = pk
         self.dyntable_id = dynt_id
-        self.display_name = display
+        self.display = display
         self.attr_type = attr_t
         self.required = required
 
@@ -66,4 +66,6 @@ def ret_type(char):
     type_ = db.Integer
     if char == 'S':
         type_ = db.String
+    elif char == 'B':
+        type_ = db.Boolean
     return type_
