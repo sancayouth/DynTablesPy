@@ -50,14 +50,14 @@ class DynAttribute(db.Model):
 
 def create_table(table_name, attributes=[]):
     methods = {}
-    methods['__tablename__'] = table_name
+    methods['__tablename__'] = table_name.lower()
     for attr in attributes:
-        attr_type = ret_type(attr.get('attr_type'))
+        attr_type = ret_type(attr.get('attr_type')[0])
         if attr.get('pk'):
-            methods[str(attr.get('attr_name'))] = db.Column(attr_type,
+            methods[str(attr.get('attr_name').lower())] = db.Column(attr_type,
                 primary_key=True)
         else:
-            methods[str(attr.get('attr_name'))] = db.Column(attr_type)
+            methods[str(attr.get('attr_name').lower())] = db.Column(attr_type)
     table = type(str(table_name), (db.Model, ), methods)
     return table
 
