@@ -3,5 +3,6 @@
 *.db
 *.sqlite
 *.coverage
+.TODO
 env
 htmlcov

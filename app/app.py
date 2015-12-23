@@ -16,7 +16,6 @@ def configure_app(app, config=None):
     if config:
         app.config.from_object(config)
 
-
 def configure_extensions(app):
     # Flask-SqlAlchemy
     db.init_app(app)
@@ -27,6 +26,8 @@ def configure_extensions(app):
 def configure_blueprints(app):
     from creator.views import creator as creator_blueprint
     app.register_blueprint(creator_blueprint)
+    from tables.views import tables as tables_blueprint
+    app.register_blueprint(tables_blueprint)
 
 
 def configure_error_handlers(app):
