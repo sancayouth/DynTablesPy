@@ -1,5 +1,5 @@
 import flask_wtf
-from wtforms import StringField, IntegerField, SubmitField
+from wtforms import StringField, IntegerField, SubmitField, BooleanField
 
 def create_form(table):
     class DynamicForm(flask_wtf.Form):
@@ -13,5 +13,7 @@ def create_form(table):
 def get_field(field):
     if field.attr_type == 'I':
         return IntegerField(field.display)
-    if field.attr_type == 'S':
+    elif field.attr_type == 'S':
         return StringField(field.display)
+    elif field.attr_type == 'B':
+        return BooleanField(field.display)
