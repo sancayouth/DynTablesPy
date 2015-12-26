@@ -17,9 +17,9 @@ class DynTableForm(Form):
 
 class DynAttributeForm(Form):
     attr_name = StringField('Attribute Name', validators=[DataRequired()])
-    pk = BooleanField('Primary Key')
     display = StringField('Display', validators=[DataRequired()])
     attr_type = SelectField(u'Type', choices=[('IntegerField', 'Integer Field'),
                  ('StringField', 'String Field'), \
                  ('BooleanField', 'Boolean Field')])
-    required = BooleanField('Required')
+    pk = BooleanField('Primary Key')
+    required = BooleanField('Required')    
