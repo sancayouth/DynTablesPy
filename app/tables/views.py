@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request
 from app.extensions import db
 from app.models import DynTable
 from app.dynamic_form import create_form
-from app.dynamic_class import loadClass
+from app.dynamic_class import load_class
 
 tables = Blueprint('tables', __name__, template_folder='templates',
                   url_prefix='/tables')
@@ -15,7 +15,7 @@ def view_table(table_id):
     form = create_form(dT)
     rform = request.form
     if form.validate_on_submit():
-        dyn_class = loadClass(table_id)
+        dyn_class = load_class(table_id)
         dc = dyn_class()
         for attr in dT.attributes:
             if not attr.pk:

@@ -2,8 +2,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from .forms import DynTableForm, DynAttributeForm
 from app.extensions import db
-from app.models import DynTable, DynAttribute, create_table
+from app.models import DynTable, DynAttribute
 from app.utils import formToDict, chboxtopy
+from app.dynamic_class import create_table
 
 
 creator = Blueprint('creator', __name__, template_folder='templates',\
