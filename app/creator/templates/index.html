@@ -59,10 +59,9 @@
               //TODO: Display msg error
             }
          });
-
+        var $rowCount = 1;
          $("#save_ch").on("click", function(e){
             e.preventDefault();
-            var $rowCount = $('#table tr').length;
             var $form = $(".form-attr");
             var $array = $form.serializeArray();
             $tr = $("<tr>").attr("id", $rowCount);
@@ -93,6 +92,7 @@
               .attr("name", "attr_"+$rowCount)
               .val($form.serialize()).appendTo(".form-table");
             $("#modalAttr").modal("hide");
+            $rowCount++;
          });
 
     </script>
