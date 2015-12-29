@@ -4,7 +4,7 @@ from .forms import DynTableForm, DynAttributeForm
 from app.extensions import db
 from app.models import DynTable, DynAttribute
 from app.utils import formToDict, chboxtopy
-from app.dynamic_class import create_table
+from app.dynamic_class import create_table, drop_table
 
 
 creator = Blueprint('creator', __name__, template_folder='templates',\
@@ -55,9 +55,20 @@ def edit(table_id):
          + table_id,form=form, detail_form=detail_form)
 
 
+@creator.route('/delete/<table_id>', methods=['POST'])
+def delete(table_id):
+    dyn_table = DynTable.query.get_or_404(table_id)
+    try:
+        drop_table(table_id)
+        db.session.delete(dyn_table)
+        db.session.commit()
+    except Exception as exception:
+        return '0'
+    return redirect(url_for('creator.list_tables'))
+
 
 @creator.route('/')
 def list_tables():
-    dyn_table = DynTable.query.all()
+    dyn_tables = DynTable.query.all()
     return render_template('list.html', title='DynTable - List of Tables', \
-                            tables=dyn_table)
+                            tables=dyn_tables)

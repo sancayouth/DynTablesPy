@@ -36,4 +36,4 @@ def ret_type(char):
 
 
 def drop_table(table_name):
-    load_class(table_name).__tablename__.drop(db.engine, checkfirst=True)
+    load_class(table_name).__table__.drop(db.engine, checkfirst=True)
