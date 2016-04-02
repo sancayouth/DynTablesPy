@@ -71,11 +71,19 @@
                 dict[value.name] = value.value;
               }
             });
+
+            var $inputPk = $("<input type='checkbox' readonly>");
+            if (getValue(dict,"pk","f") !== "f")
+              $inputPk.attr("checked", true).attr("value","y");
+            var $inputRequired = $("<input type='checkbox' readonly>");
+            if (getValue(dict,"required","f") !== "f")
+                $inputRequired.attr("checked", true).attr("value","y");
+
             $tr.append($("<td>").html(getValue(dict,'attr_name','').replace(/<[^>]+>/ig,'')))
                .append($("<td>").html(getValue(dict,'display','').replace(/<[^>]+>/ig,'')))
                .append($("<td>").html(getValue(dict,'attr_type','').replace(/<[^>]+>/ig,'')))
-               .append($("<td>").html(getValue(dict,'pk','f')))
-               .append($("<td>").html(getValue(dict,'required','f')));
+               .append($("<td>").append($inputPk))
+               .append($("<td>").append($inputRequired));
 
             var $a = $("<button>").attr("data-id", "attr_"+$rowCount)
                  .addClass("btn btn-info").html("Delete")

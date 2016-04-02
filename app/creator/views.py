@@ -24,11 +24,12 @@ def add():
             attr_list = []
             for i in range(1, len(rform) - 1):
                 attr_dic = formToDict(rform.get('attr_' + str(i)))
+                print attr_dic
                 attr = DynAttribute(
                     attr_dic.get('attr_name').replace('+', ' '), dyn_table.id,
                     attr_dic.get('display', '').replace('+', ' '),
-                    attr_dic.get('attr_type')[0], chboxtopy(attr_dic.get('pk')),
-                    chboxtopy(attr_dic.get('required')))
+                    attr_dic.get('attr_type')[0], 'pk' in attr_dic,
+                    'required' in attr_dic)
                 attr_list.append(attr_dic)
                 db.session.add(attr)
         db.session.commit()
